@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Sugestões de Palavras - Jogo",
+  "version": "1.0",
+  "description": "Extensão que sugere palavras automaticamente baseado nas dicas do jogo",
+  "permissions": [
+    "activeTab"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["words.js", "content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Sugestões de Palavras"
+  },
+  "icons": {
+    "128": "icon.png"
+  }
+}
