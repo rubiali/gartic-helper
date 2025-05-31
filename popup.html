@@ -3,162 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sugestões de Palavras</title>
-    <style>
-        body {
-            width: 300px;
-            padding: 0;
-            margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-        
-        .container {
-            padding: 20px;
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        
-        .header h1 {
-            margin: 0;
-            font-size: 18px;
-            font-weight: 600;
-        }
-        
-        .header p {
-            margin: 5px 0 0 0;
-            font-size: 12px;
-            opacity: 0.8;
-        }
-        
-        .info-card {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .info-card h3 {
-            margin: 0 0 8px 0;
-            font-size: 14px;
-        }
-        
-        .info-card p {
-            margin: 0;
-            font-size: 12px;
-            line-height: 1.4;
-            opacity: 0.9;
-        }
-        
-        .features {
-            list-style: none;
-            padding: 0;
-            margin: 10px 0 0 0;
-        }
-        
-        .features li {
-            padding: 4px 0;
-            font-size: 12px;
-            opacity: 0.9;
-        }
-        
-        .features li:before {
-            content: "✨ ";
-            margin-right: 5px;
-        }
-        
-        .status {
-            background: rgba(76, 175, 80, 0.2);
-            border: 1px solid rgba(76, 175, 80, 0.4);
-            border-radius: 6px;
-            padding: 10px;
-            text-align: center;
-            font-size: 12px;
-        }
-        
-        .status.active {
-            background: rgba(76, 175, 80, 0.2);
-            border-color: rgba(76, 175, 80, 0.4);
-        }
-        
-        .status.inactive {
-            background: rgba(255, 193, 7, 0.2);
-            border-color: rgba(255, 193, 7, 0.4);
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            font-size: 11px;
-            opacity: 0.7;
-        }
-        
-        .version {
-            font-size: 10px;
-            opacity: 0.6;
-        }
-    </style>
+    <title>Word Game Assistant</title>
+    <link rel="stylesheet" href="popup-styles.css">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🎯 Sugestões de Palavras</h1>
-            <p>Assistente automático para jogos de adivinhação</p>
+    <div class="popup-container">
+        <div class="popup-header">
+            <div class="popup-title">
+                <span class="popup-icon">🎯</span>
+                <h1>Word Assistant</h1>
+            </div>
+            <div class="popup-version">v1.0</div>
         </div>
-        
-        <div class="info-card">
-            <h3>Como funciona</h3>
-            <p>A extensão analisa automaticamente as dicas na página e sugere palavras que correspondem ao padrão revelado.</p>
-            <ul class="features">
-                <li>Detecção automática de dicas</li>
-                <li>Sugestões em tempo real</li>
-                <li>Interface flutuante na página</li>
-                <li>Cópia rápida das palavras</li>
-            </ul>
+
+        <div class="popup-content">
+            <div class="status-section">
+                <div class="status-item">
+                    <span class="status-label">Status:</span>
+                    <span class="status-value" id="status">Desativado</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Palavras:</span>
+                    <span class="status-value" id="word-count">---</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Página:</span>
+                    <span class="status-value" id="page-status">---</span>
+                </div>
+            </div>
+
+            <div class="controls-section">
+                <button class="control-btn activate" id="activate-btn">
+                    <span class="btn-icon">⚡</span>
+                    Ativar Assistente
+                </button>
+                
+                <button class="control-btn settings" id="settings-btn">
+                    <span class="btn-icon">⚙️</span>
+                    Configurações
+                </button>
+            </div>
+
+            <div class="info-section">
+                <div class="info-card">
+                    <div class="info-title">Como usar:</div>
+                    <div class="info-list">
+                        <div class="info-item">
+                            <span class="info-bullet">1</span>
+                            Navegue até a página do jogo de palavras
+                        </div>
+                        <div class="info-item">
+                            <span class="info-bullet">2</span>
+                            Clique no botão "Ativar Assistente"
+                        </div>
+                        <div class="info-item">
+                            <span class="info-bullet">3</span>
+                            As sugestões aparecerão automaticamente
+                        </div>
+                        <div class="info-item">
+                            <span class="info-bullet">4</span>
+                            Use <kbd>Ctrl+Shift+W</kbd> para ativar/desativar
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-card" id="stats-card" style="display: none;">
+                    <div class="stats-title">Estatísticas da Sessão</div>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number" id="suggestions-made">0</div>
+                            <div class="stat-label">Sugestões</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" id="words-found">0</div>
+                            <div class="stat-label">Palavras</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" id="accuracy">0%</div>
+                            <div class="stat-label">Precisão</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features-section">
+                <div class="feature-item">
+                    <span class="feature-icon">🚀</span>
+                    <div class="feature-text">
+                        <div class="feature-title">Tempo Real</div>
+                        <div class="feature-desc">Sugestões instantâneas</div>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🎯</span>
+                    <div class="feature-text">
+                        <div class="feature-title">Alta Precisão</div>
+                        <div class="feature-desc">Algoritmo inteligente</div>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">💎</span>
+                    <div class="feature-text">
+                        <div class="feature-title">Design Neon</div>
+                        <div class="feature-desc">Interface moderna</div>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <div class="info-card">
-            <h3>Instruções</h3>
-            <p>1. Navegue até a página do jogo<br>
-            2. A extensão detectará automaticamente as dicas<br>
-            3. Veja as sugestões no painel flutuante<br>
-            4. Clique em uma palavra para copiá-la</p>
-        </div>
-        
-        <div class="status active" id="extensionStatus">
-            ✅ Extensão ativa e funcionando
-        </div>
-        
-        <div class="footer">
-            <p>Desenvolvido para jogos de palavras</p>
-            <div class="version">v1.0.0</div>
+
+        <div class="popup-footer">
+            <div class="footer-text">
+                Criado com ❤️ para jogos de palavras
+            </div>
+            <div class="footer-links">
+                <button class="footer-link" id="help-btn">Ajuda</button>
+                <button class="footer-link" id="about-btn">Sobre</button>
+            </div>
         </div>
     </div>
-    
-    <script>
-        // Verifica se a extensão está funcionando
-        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-            const statusElement = document.getElementById('extensionStatus');
-            
-            if (tabs[0]) {
-                // Verifica se é uma página válida (não chrome://, chrome-extension://, etc.)
-                const url = tabs[0].url;
-                if (url.startsWith('chrome://') || url.startsWith('chrome-extension://') || url.startsWith('moz-extension://')) {
-                    statusElement.textContent = '⚠️ Extensão não funciona nesta página';
-                    statusElement.className = 'status inactive';
-                } else {
-                    statusElement.textContent = '✅ Extensão ativa e funcionando';
-                    statusElement.className = 'status active';
-                }
-            }
-        });
-    </script>
+
+    <script src="popup.js"></script>
 </body>
 </html>

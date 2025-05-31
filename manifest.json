@@ -1,22 +1,23 @@
 {
   "manifest_version": 3,
-  "name": "Sugestões de Palavras - Jogo",
+  "name": "Word Game Assistant",
   "version": "1.0",
-  "description": "Extensão que sugere palavras automaticamente baseado nas dicas do jogo",
+  "description": "Assistente para jogos de palavras com sugestões em tempo real",
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "storage"
   ],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["words.js", "content.js"],
+      "js": ["content.js"],
       "css": ["styles.css"],
       "run_at": "document_end"
     }
   ],
   "action": {
     "default_popup": "popup.html",
-    "default_title": "Sugestões de Palavras"
+    "default_title": "Word Game Assistant"
   },
   "icons": {
     "128": "icon.png"
